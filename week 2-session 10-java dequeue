@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class test {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Deque<Integer> deque = new ArrayDeque<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        
+        int n = in.nextInt();
+        int m = in.nextInt();
+        int maxUnique = 0;
+
+        for (int i = 0; i < n; i++) {
+            int num = in.nextInt();
+            
+            // Add new element to window
+            deque.addLast(num);
+            map.put(num, map.getOrDefault(num, 0) + 1);
+            
+            // Maintain window size of m
+            if (deque.size() == m) {
+                // Update max unique count seen so far
+                maxUnique = Math.max(maxUnique, map.size());
+                
+                // Early exit optimization: maximum possible unique elements in window of size m is m
+                if (maxUnique == m) {
+                    System.out.println(maxUnique);
+                    return;
+                }
+                
+                // Remove the oldest element going out of the sliding window
+                int first = deque.removeFirst();
+                int count = map.get(first);
+                if (count == 1) {
+                    map.remove(first);
+                } else {
+                    map.put(first, count - 1);
+                }
+            }
+        }
+        
+        System.out.println(maxUnique);
+    }
+}
