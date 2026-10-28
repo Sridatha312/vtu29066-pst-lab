@@ -1,0 +1,29 @@
+import sys
+from collections import Counter
+
+def solve():
+    input = sys.stdin.read
+    data = input().split()
+    if not data:
+        return
+    
+    t = int(data[0])
+    results = []
+    
+    for i in range(1, t + 1):
+        s = data[i]
+        n = len(s)
+        mid = n // 2
+        
+        left_half = s[:mid]
+        right_half = s[mid:] if n % 2 == 0 else s[mid + 1:]
+        
+        if Counter(left_half) == Counter(right_half):
+            results.append("YES")
+        else:
+            results.append("NO")
+            
+    print('\n'.join(results))
+
+if __name__ == '__main__':
+    solve()
